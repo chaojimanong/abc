@@ -1,0 +1,61 @@
+*{margin:0 ; padding:0}
+
+a{text-decoration:none}
+body{
+    background:#666666 url(./wall.jpg) no-repeat center;
+    background-size: cover;
+}
+
+kbd{
+    border:1px solid red;
+    height:4em;
+    width:4em;
+    display:inline-block;
+    text-transform: uppercase;
+    position:relative;
+}
+
+kbd > button{
+    position:absolute;
+    right: 0;
+    bottom: 0;
+    display:none;
+}
+kbd:hover >button{
+    display:inline-block;
+}
+
+
+main{
+    text-align:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.cover{
+    background: rgba(0,0,0,0.52);
+    padding: 40px 20px;
+}
+
+.text{
+    background: linear-gradient(to bottom, rgba(41,41,41,1) 0%, rgba(0,0,0,1) 100%);
+    color:rgba(255,255,255,0.4);
+    text-shadow: white -0.3px -0.2px;
+    border:0.5px solid #484848;
+    border-style:outset;
+    border-radius: 6px ;
+    box-shadow: 0.6px 0.8px 0.4px 0.4px rgba(0, 0, 0, 0.8),
+     0.8px 1px 0.6px 0.6px rgba(0, 0, 0, 1), 
+     0.9px 0.9px 1px 2px rgba(184,186,214,1);
+    margin: 4px 6px;
+    padding: 2px 4px;
+}
+
+#xxx{
+    display:inline-block;
+}
+#xxx > div:nth-child(3){
+    margin-right:2em;
+}
