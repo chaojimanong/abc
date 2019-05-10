@@ -19,6 +19,7 @@
     <footer></footer>
     <script>
         //初始化各种值
+
         var Key = {
             '0':{0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
             '1':{0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l',length:9},
@@ -37,36 +38,23 @@
         var x = 0
 
         while(x< Key['length']){
-            var div1 = document.createElement('div')
+            var div1 = create('div')
             xxx.appendChild(div1)
             var row = Key[x]//第x个数组
             var x2=0
             //row[x2] = qwerty
             while(x2<row['length']){
-                var kbd1 = document.createElement('kbd')
+                var kbd1 = create('kbd')
                 kbd1.className = 'text'
-                var div2 = document.createElement('div')
+                var div2 = create('div')
                 div2.textContent=row[x2]
-                var img1 = document.createElement('img')
-                if(hash[row[x2]]){
-                    img1.src = 'http://' + hash[row[x2]] + '/favicon.ico'
-                }else{
-                    img1.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
-                }
-                img1.onerror = function(xxx){
-                    xxx.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
-                }
-                
+                var img1 = create('img')
                 img1.className = 'logo'
-                var button1 = document.createElement('button')
+                createlogo(hash[row[x2]])
+                var button1 = create('button')
                 button1.textContent='编辑'
                 button1.id = row[x2]
-                button1.onclick = function (chaoji){
-                    id = chaoji['target']['id']
-                    x = prompt('请输入要变更的网址')
-                    hash[id] = x
-                    localStorage.setItem('zzz' , JSON.stringify(hash))
-                }
+                buttonset()
                 kbd1.appendChild(div2)
                 kbd1.appendChild(img1)
                 kbd1.appendChild(button1)
@@ -77,12 +65,51 @@
         }
 
         //访问网址，监听
-        document.onkeypress = function(chaoji){
+        listenkbd(hash)
+        
+        //生成函数
+        function create(x){
+    return document.createElement(x)
+    }
+
+    function createlogo(x){
+                    if(x){
+                    img1.src = 'http://' + x+ '/favicon.ico'
+                }else{
+                    img1.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+                img1.onerror = function(xxx){
+                    xxx.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+                }
+                
+            function listenkbd(hash){
+            document.onkeypress = function(chaoji){
             key = chaoji['key']
             website = hash[key]
             //location.href='http//'+website
             window.open('https://'+website, '_black')
         }
+
+        }
+    
+        function buttonset(){
+                    button1.onclick = function (chaoji){
+                    var button2 = chaoji['target']
+                    var img2 = button2.previousSibling
+                    var id = button2['id']
+                    var x = prompt('请输入要变更的网址')
+                    hash[id] = x 
+                    img2.src = 'http://'+x + '/favicon.ico'
+				    img2.onerror = function(xxx){
+					xxx.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+				}
+                    localStorage.setItem('zzz' , JSON.stringify(hash))
+                    
+                }
+                }
+    
+
 
     </script>
 </body>
