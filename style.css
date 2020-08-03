@@ -3,7 +3,7 @@
 a{text-decoration:none}
 body{
     background:#666666 url(./wall.jpg) no-repeat center;
-    background-size: cover;
+    /* background-size: cover; */
 }
 
 kbd{

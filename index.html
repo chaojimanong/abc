@@ -1,116 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./style.css" />
     <title>导航页面</title>
-</head>
-<body >
+  </head>
+  <body>
     <header></header>
-    
-    <main >
-        <div class="cover">
-            <div class=wrapper id=xxx></div>
-        </div>
-        
+
+    <main>
+      <div class="cover">
+        <div class="wrapper" id="xxx"></div>
+      </div>
     </main>
     <footer></footer>
     <script>
-        //初始化各种值
+      var hashA = init();
+      var keys = hashA["key"];
+      var hash = hashA["hash"];
+      //生成键盘
+      createKbd(keys, hash);
+      //访问网址，监听
+      listenkbd(hash);
 
+      //初始化各种值
+      function init() {
         var Key = {
-            '0':{0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
-            '1':{0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l',length:9},
-            '2':{0:'z',1:'x',2:'c',3:'v',4:'b',5:'n',6:'m',length:7},
-            length:3
+          "0": {
+            0: "q",
+            1: "w",
+            2: "e",
+            3: "r",
+            4: "t",
+            5: "y",
+            6: "u",
+            7: "i",
+            8: "o",
+            9: "p",
+            length: 10,
+          },
+          "1": {
+            0: "a",
+            1: "s",
+            2: "d",
+            3: "f",
+            4: "g",
+            5: "h",
+            6: "j",
+            7: "k",
+            8: "l",
+            length: 9,
+          },
+          "2": {
+            0: "z",
+            1: "x",
+            2: "c",
+            3: "v",
+            4: "b",
+            5: "n",
+            6: "m",
+            length: 7,
+          },
+          length: 3,
+        };
+        var hash = {
+          b: "bilibili.com",
+          c: "jianshu.com",
+          d: "baidu.com",
+          g: "google.com",
+          h: "github.com",
+          i: "yhdm.tv",
+          j: "juejin.im",
+          q: "qq.com",
+          v: "v2ex.com",
+          w: "weibo.com",
+          x: "xiedaimala.com",
+          y: "douyu.com",
+          z: "zhihu.com",
+        };
+
+        var hashInLocalStorage = JSON.parse(
+          localStorage.getItem("zzz") || "null"
+        );
+        if (hashInLocalStorage) {
+          hash = hashInLocalStorage;
         }
-        var hash = {'q':'qq.com','w':'weibo.com'}
+        return {
+          key: Key,
+          hash: hash,
+        };
+      }
 
+      function createKbd(Key, hash) {
+        //生成键盘
+        var x = 0;
 
-        var hashInLocalStorage = JSON.parse(localStorage.getItem('zzz') || 'null')
-        if(hashInLocalStorage){
-            hash = hashInLocalStorage
+        while (x < Key["length"]) {
+          var div1 = create("div");
+          xxx.appendChild(div1);
+          var row = Key[x]; //第x个数组
+          var x2 = 0;
+          //row[x2] = qwerty
+          while (x2 < row["length"]) {
+            var kbd1 = create("kbd");
+            kbd1.className = "text";
+            var div2 = create("div");
+            div2.textContent = row[x2];
+            var img1 = create("img");
+            img1.className = "logo";
+            createlogo(hash[row[x2]], img1);
+            var button1 = create("button");
+            button1.textContent = "编辑";
+            button1.id = row[x2];
+            buttonset(button1);
+            kbd1.appendChild(div2);
+            kbd1.appendChild(img1);
+            kbd1.appendChild(button1);
+            div1.appendChild(kbd1);
+            x2 = x2 + 1;
+          }
+          x = x + 1;
         }
+      }
 
-            //生成键盘
-        var x = 0
+      //生成函数
+      function create(x) {
+        return document.createElement(x);
+      }
 
-        while(x< Key['length']){
-            var div1 = create('div')
-            xxx.appendChild(div1)
-            var row = Key[x]//第x个数组
-            var x2=0
-            //row[x2] = qwerty
-            while(x2<row['length']){
-                var kbd1 = create('kbd')
-                kbd1.className = 'text'
-                var div2 = create('div')
-                div2.textContent=row[x2]
-                var img1 = create('img')
-                img1.className = 'logo'
-                createlogo(hash[row[x2]])
-                var button1 = create('button')
-                button1.textContent='编辑'
-                button1.id = row[x2]
-                buttonset()
-                kbd1.appendChild(div2)
-                kbd1.appendChild(img1)
-                kbd1.appendChild(button1)
-                div1.appendChild(kbd1)
-                x2 = x2+1
-            }
-            x = x+1
+      function createlogo(x, img) {
+        if (x) {
+          img.src = "http://" + x + "/favicon.ico";
+        } else {
+          img.src = "//i.loli.net/2017/11/10/5a05afbc5e183.png";
         }
+        img.onerror = function (xxx) {
+          xxx.target.src = "//i.loli.net/2017/11/10/5a05afbc5e183.png";
+        };
+      }
 
-        //访问网址，监听
-        listenkbd(hash)
-        
-        //生成函数
-        function create(x){
-    return document.createElement(x)
-    }
+      function listenkbd(hash) {
+        document.onkeypress = function (chaoji) {
+          key = chaoji["key"].toLowerCase();
+          website = hash[key];
+          //location.href='http//'+website
+          window.open("https://" + website, "_black");
+        };
+      }
 
-    function createlogo(x){
-                    if(x){
-                    img1.src = 'http://' + x+ '/favicon.ico'
-                }else{
-                    img1.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
-                }
-                img1.onerror = function(xxx){
-                    xxx.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
-                }
-                }
-                
-            function listenkbd(hash){
-            document.onkeypress = function(chaoji){
-            key = chaoji['key']
-            website = hash[key]
-            //location.href='http//'+website
-            window.open('https://'+website, '_black')
-        }
-
-        }
-    
-        function buttonset(){
-                    button1.onclick = function (chaoji){
-                    var button2 = chaoji['target']
-                    var img2 = button2.previousSibling
-                    var id = button2['id']
-                    var x = prompt('请输入要变更的网址')
-                    hash[id] = x 
-                    img2.src = 'http://'+x + '/favicon.ico'
-				    img2.onerror = function(xxx){
-					xxx.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
-				}
-                    localStorage.setItem('zzz' , JSON.stringify(hash))
-                    
-                }
-                }
-    
-
-
+      function buttonset(button) {
+        button.onclick = function (chaoji) {
+          var button2 = chaoji["target"];
+          var img2 = button2.previousSibling;
+          var id = button2["id"];
+          var x = prompt("请输入要变更的网址");
+          hash[id] = x;
+          img2.src = "http://" + x + "/favicon.ico";
+          img2.onerror = function (xxx) {
+            xxx.target.src = "//i.loli.net/2017/11/10/5a05afbc5e183.png";
+          };
+          localStorage.setItem("zzz", JSON.stringify(hash));
+        };
+      }
     </script>
-</body>
+  </body>
 </html>
